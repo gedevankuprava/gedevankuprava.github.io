@@ -197,15 +197,34 @@ html{scrollbar-color:#242424 var(--ink);scrollbar-width:thin}
  color:var(--chalk)}
 .offer .meta{margin:0 0 var(--s3);font-size:14px;color:var(--muted);max-width:74ch;
  line-height:1.7}
-/* 2026-09-11, his deck: this section is to read bigger and as bullets, so it is taken in at a
-   glance. The marker is a hairline dash drawn in the margin rather than a bullet glyph, which
-   keeps the left edge of the text aligned with everything above it. */
-.offerlist{list-style:none;margin:0 0 var(--s6);padding:0;max-width:none;columns:1}
-.offerlist li{position:relative;padding-left:30px;margin:0 0 var(--s4);
- font-size:var(--t2);line-height:1.3;color:var(--chalk);font-weight:300;
- break-inside:avoid}
-.offerlist li::before{content:'';position:absolute;left:0;top:.62em;width:18px;height:1px;
- background:var(--muted)}
+/* 2026-09-11, his deck: this section is to read bigger and be taken in at a glance.
+   2026-09-15, his pick out of five treatments: the five capabilities run as one band of
+   columns divided by hairlines, no markers and no numbering. It is the same device the case
+   fact sheets use, so the page has one way of showing a set of things rather than two, and it
+   reads across in a single movement of the eye instead of down a stack of dashes.
+   Below 1080 it folds to two columns with the fifth spanning both, and below 560 to one. */
+.offerlist{list-style:none;margin:0 0 var(--s6);padding:0;max-width:none;display:grid;
+ grid-template-columns:repeat(5,minmax(0,1fr));
+ border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.offerlist li{padding:var(--s5) var(--s4) var(--s5) 0;font-weight:300;
+ font-size:clamp(.95rem,1.18vw,1.15rem);line-height:1.34;letter-spacing:-.008em;
+ color:var(--chalk)}
+.offerlist li + li{border-left:1px solid var(--line);padding-left:var(--s4)}
+@media (max-width:1080px){
+  .offerlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .offerlist li:nth-child(n){padding:var(--s4) var(--s4) var(--s4) 0;
+   border-top:1px solid var(--line)}
+  .offerlist li:nth-child(-n+2){border-top:0}
+  .offerlist li:nth-child(odd){border-left:0;padding-left:0}
+  .offerlist li:nth-child(even){border-left:1px solid var(--line);padding-left:var(--s4)}
+  .offerlist li:last-child{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .offerlist{grid-template-columns:minmax(0,1fr)}
+  .offerlist li:nth-child(n){border-left:0;padding:var(--s4) 0;
+   border-top:1px solid var(--line)}
+  .offerlist li:nth-child(1){border-top:0}
+}
 
 
 /* ---------------------------------------------------------------- case cards */
@@ -457,6 +476,18 @@ html{scrollbar-color:#242424 var(--ink);scrollbar-width:thin}
   .nxin{grid-template-columns:1fr;gap:var(--s6)}
   .nx .all,.nx .next{align-items:flex-start;text-align:left}
   .reeltop{gap:var(--s4)}
+}
+/* A tablet was getting the phone layout: one breakpoint at 860 took the top bar from 88px
+   back to 62, hid the role, dropped the page gutter to 20px and stacked the fact sheet into a
+   single 780px-wide column. The stacking above is right on a tablet, the chrome was not.
+   This block sits after it on purpose, so it wins between 641 and 1024 and nothing below 641
+   changes. The role comes back only from 781 up, where the bar has the width for it. */
+@media (min-width:641px) and (max-width:1024px){
+  :root{--pad:28px;--navh:76px}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s5) var(--s6)}
+}
+@media (min-width:781px) and (max-width:1024px){
+  .top .role{display:block}
 }
 @media (max-width:639px){
   .eyebrow,.gh{font-size:.6rem;letter-spacing:.18em}
