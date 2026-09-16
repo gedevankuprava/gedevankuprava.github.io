@@ -474,13 +474,13 @@ html{scrollbar-color:#242424 var(--ink);scrollbar-width:thin}
 .top .cv{margin-left:var(--s3);color:var(--soft);white-space:nowrap;
  transition:color var(--fast) var(--ease)}
 .top .cv:hover,.top .cv:focus-visible{color:var(--chalk)}
-@media (max-width:720px){.top .cv{display:none}}
+@media (max-width:720px){.top .cv{display:inline}}
 .foot .fmail{color:var(--muted);transition:color var(--fast) var(--ease)}
 .foot .fmail:hover{color:var(--chalk)}
 
 /* ---------------------------------------------------------------- narrow */
 @media (max-width:860px){
-  :root{--pad:20px;--navh:62px}
+  :root{--pad:20px}
   .case{grid-template-columns:1fr;gap:var(--s4)}
   .case .ci{padding:0}
   .case .ci img{max-height:52vh}
@@ -516,3 +516,9 @@ html{scrollbar-color:#242424 var(--ink);scrollbar-width:thin}
 /* The true-scale board keeps true scale at every width, phone included. Forcing the items to a
    uniform two-up on mobile would put a 320x120 sidebar and a 1600x533 masthead at the same
    width, directly under captions stating their real sizes — a nicer-looking lie. */
+
+/* The header height, last word. Three tiers above were each setting it and source order was
+   deciding the winner rather than intent, which left the two-row phone bar standing in 62px
+   with its own contents hanging outside it. Decided here, once, at the end. */
+@media (min-width:721px) and (max-width:860px){:root{--navh:62px}}
+@media (max-width:720px){:root{--navh:100px}}
